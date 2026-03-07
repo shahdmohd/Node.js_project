@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/shahdmohd/Node.js_project#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "mongoose": "^9.2.4"
+    "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.4",
+    "nodemailer": "^8.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
