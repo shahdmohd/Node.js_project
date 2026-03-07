@@ -1,0 +1,30 @@
+{
+  "name": "node.js_project",
+  "version": "1.0.0",
+  "description": "Project for Node.js course",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shahdmohd/Node.js_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/shahdmohd/Node.js_project/issues"
+  },
+  "homepage": "https://github.com/shahdmohd/Node.js_project#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
