@@ -19,12 +19,14 @@ let getWishlist = async (req, res) => {
 
 let addToWishlist = async (req, res) => {
     const userId = req.decoded._id;
+    console.log("Body:", req.body);
     const { productId } = req.body;
 //mock test for  add to wish list but there is no schema yet soo 
 //     const newWishlistItem = new wishlistModel({ userId, productId });
 //     await newWishlistItem.save();
 //    return res.status(201).json({ message: "Product added to wishlist", wishlistItem: newWishlistItem });
-
+  console.log("Product ID:", productId);
+console.log("Type:", typeof productId);
     if (!mongoose.Types.ObjectId.isValid(productId)) {
             return res.status(400).json({ message: "Invalid Product ID format" });
         }
@@ -33,10 +35,7 @@ let addToWishlist = async (req, res) => {
         if (existingWishlistItem) {
             return res.status(409).json({ message: "Product already in wishlist" });
         }
-        else {
-             return res.status(404).json({ error: 'Product not found or not authorized' })};
-      
-
+       
         const newWishlistItem = new wishlistModel({ userId, productId });
         await newWishlistItem.save();
         res.status(201).json({ message: "Product added to wishlist", wishlistItem: newWishlistItem });
@@ -50,7 +49,7 @@ let addToWishlist = async (req, res) => {
 
 let removeFromWishlist = async (req, res) => {
     const userId = req.decoded._id;
-    const { productId } = req.params.productId;
+    const { productId } = req.params;
 
       if (!mongoose.Types.ObjectId.isValid(productId)) {
             return res.status(400).json({ message: "Invalid Product ID format" });
