@@ -4,6 +4,7 @@ import { connection } from "./Database/dbconnect.js";
 import userRoutes from "./Modules/Users/userRoutes.js";
 import wishlistRoutes from "./Modules/Wishlist/wishlistRoutes.js";
 import favoriteRoutes from "./Modules/Favorites/favoriteRoutes.js";
+import adminRoutes from "./Modules/Admin/admin.routes.js";
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(userRoutes);
 app.use(wishlistRoutes);
 app.use(favoriteRoutes);
 app.use(globalError);
+app.use(adminRoutes);
+
 
 
 app.listen(3000, () => {

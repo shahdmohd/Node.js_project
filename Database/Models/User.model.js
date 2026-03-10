@@ -27,12 +27,12 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-   role:{
-        type:String,
-        enum:["customer","seller","admin"],
-        default:"customer"
+    role:{
+            type:String,
+            enum:["customer","seller","admin"],
+            default:"customer"
     },
-    
+
     isActive: {
         type: Boolean,
         default: true
