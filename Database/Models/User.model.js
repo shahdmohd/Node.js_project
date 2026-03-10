@@ -32,6 +32,16 @@ const userSchema = new Schema({
         enum:["customer","seller","admin"],
         default:"customer"
     },
+    
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+
+    isRestricted: {
+        type: Boolean,
+        default: false
+    }
    
 
     // wishlist:[
