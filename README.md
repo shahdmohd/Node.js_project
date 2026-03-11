@@ -231,11 +231,11 @@ A full walkthrough of the application and codebase will be presented during the 
 # 👩‍💻 Contributors
 
 Project developed by the MEAN Stack team:
- Heba Maher
- Janna Wael
- Nagham Mohamed
- Shahd Mohammed 
- Somaya Ayman
+* Heba Maher
+* Janna Wael
+* Nagham Mohamed
+* Shahd Mohammed 
+* Somaya Ayman
  
 
 ---
@@ -243,5 +243,6 @@ Project developed by the MEAN Stack team:
 # 📜 License
 
 This project is for educational purposes.
+
 
 
