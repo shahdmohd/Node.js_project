@@ -101,7 +101,7 @@ let verifyAccount = (req,res) => {
   }
 };
 
-let update = async (req, res) => {
+let updateProfile = async (req, res) => {
   try {
     const userId = req.decoded._id;
     const updateData = req.body;
@@ -171,4 +171,4 @@ let changePassword = async (req, res) => {
   }
 };
 
-export {listUsers,signin,signup,verifyAccount,getProfile,update,deleteProfile}
+export {listUsers,signin,signup,verifyAccount,getProfile,updateProfile,deleteProfile,changePassword}

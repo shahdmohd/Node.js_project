@@ -1,19 +1,25 @@
 import express from "express";
-import { listUsers, signin, signup, verifyAccount,getProfile }from "./userController.js"; 
+import { listUsers, signin, signup, verifyAccount,getProfile,deleteProfile,updateProfile,changePassword }from "./userController.js"; 
 import hashPassword from "../../Middleware/User/hashPassword.js";
 import checkEmail from "../../Middleware/User/CheckEmail.js";
 import verifyToken from "../../Middleware/verifyToken.js";
+import { authorizeRoles } from "../../Middleware/roleMiddleware.js";
 
 // import validationMiddleWareUSER from "../../Middleware/userValidationMiddleware.js";
 
 
 let userRoutes = express.Router();
 
-userRoutes.get("/users", listUsers);
-userRoutes.post("/signup",checkEmail,hashPassword, signup);
-userRoutes.post("/signin",checkEmail, signin)
-userRoutes.get("/verify/:email",verifyAccount)
-userRoutes.get("/profile",verifyToken,getProfile)
 
+userRoutes.post("/signup", checkEmail, hashPassword, signup);
+userRoutes.post("/signin", checkEmail, signin);
+userRoutes.get("/verify/:email", verifyAccount);
+
+
+userRoutes.get("/users", verifyToken, authorizeRoles("admin"), listUsers); 
+userRoutes.get("/profile", verifyToken, getProfile); 
+userRoutes.put("/updateprofile", verifyToken, authorizeRoles("customer", "seller"), checkEmail, updateProfile); 
+userRoutes.put("/changepassword", verifyToken, changePassword); 
+userRoutes.delete("/deleteprofile", verifyToken, authorizeRoles("customer", "seller"), deleteProfile); 
 export default userRoutes
 

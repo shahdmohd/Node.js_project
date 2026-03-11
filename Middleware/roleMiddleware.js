@@ -1,15 +1,19 @@
-export const authorizeRoles = (...roles)=>{
+export const authorizeRoles = (...roles) => {
+    return (req, res, next) => {
+   
+        if (!req.decoded) {
+            return res.status(401).json({
+                message: "Please login first"
+            });
+        }
 
-return (req,res,next)=>{
+       
+        if (!roles.includes(req.decoded.role)) {
+            return res.status(403).json({
+                message: "You do not have permission to perform this action"
+            });
+        }
 
-    if(!roles.includes(req.user.role)){
-        return res.status(403).json({
-            message:"You are not authorized"
-        });
-    }
-
-    next();
-
-};
-
+        next();
+    };
 };
