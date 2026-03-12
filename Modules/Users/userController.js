@@ -5,11 +5,6 @@ import jwt from "jsonwebtoken"
 import { sendEmail } from "../../Email/email.js";
 
 
-let listUsers = async (req, res) => {
-    let users = await userModel.find();
-    res.json({mesaage: "List Of Users", data: users});
-}
-
 let signup =  async (req, res) => {
     let addUser = await userModel.insertMany(req.body); 
     sendEmail(req.body.email)
@@ -18,7 +13,7 @@ let signup =  async (req, res) => {
 }
 
 
- let signin = async (req, res, next) => {
+let signin = async (req, res, next) => {
 
     let foundUser = req.foundUser 
 
@@ -101,4 +96,4 @@ let verifyAccount = (req,res) => {
   }
 };
 
-export {listUsers,signin,signup,verifyAccount,getProfile}
+export {signin,signup,verifyAccount,getProfile}

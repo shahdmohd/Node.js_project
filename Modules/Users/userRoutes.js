@@ -1,5 +1,5 @@
 import express from "express";
-import { listUsers, signin, signup, verifyAccount,getProfile }from "./userController.js"; 
+import {signin, signup, verifyAccount, getProfile }from "./userController.js"; 
 import hashPassword from "../../Middleware/User/hashPassword.js";
 import checkEmail from "../../Middleware/User/CheckEmail.js";
 import verifyToken from "../../Middleware/verifyToken.js";
@@ -9,7 +9,7 @@ import verifyToken from "../../Middleware/verifyToken.js";
 
 let userRoutes = express.Router();
 
-userRoutes.get("/users", listUsers);
+// userRoutes.get("/users", listUsers);
 userRoutes.post("/signup",checkEmail,hashPassword, signup);
 userRoutes.post("/signin",checkEmail, signin)
 userRoutes.get("/verify/:email",verifyAccount)
