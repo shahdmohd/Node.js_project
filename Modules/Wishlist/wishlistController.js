@@ -8,7 +8,7 @@ let getWishlist = async (req, res) => {
     const userId = req.decoded._id;
 // dont forget to populate with product details beacuse when i put it it gives me error that schema is not defined yet
     try {
-        const wishlistItems = await wishlistModel.find({ userId });
+        const wishlistItems = await wishlistModel.find({ userId }).populate("productId");
         res.status(200).json({ message: "Wishlist fetched successfully", wishlist: wishlistItems });
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -38,11 +38,13 @@ console.log("Type:", typeof productId);
        
         const newWishlistItem = new wishlistModel({ userId, productId });
         await newWishlistItem.save();
+        await newWishlistItem.populate("productId");
+
         res.status(201).json({ message: "Product added to wishlist", wishlistItem: newWishlistItem });
     }
     
     catch (error) {
-        return res.status(500).json({ message: "Internal server error" });
+        return res.status(500).json({ message: error.message });
     }
 
 }

@@ -4,8 +4,8 @@ import favoriteModel from "../../Database/Models/Favorite.model.js";
 
 let getFavorites = async (req,res) => {
     let userId =req.decoded._id;
-    let favorites=await favoriteModel.find({userId})
-    //let favorites=await favoriteModel.find({userId}).populate("productId");
+    // let favorites=await favoriteModel.find({userId})
+    let favorites=await favoriteModel.find({userId}).populate("productId");
     res.status(200).json({message: "Favorites fetched successfully", favorites: favorites})
 }
 
@@ -21,9 +21,10 @@ let getFavorites = async (req,res) => {
     if (existingFavorite) {
         return res.status(409).json({ message: "Product already in favorites" });    
     }
-     const newFavorite = new favoriteModel({ userId, productId })
-     //const newFavorite = new favoriteModel({ userId, productId }).populate("productId");
+    //  const newFavorite = new favoriteModel({ userId, productId })
+     const newFavorite = new favoriteModel({ userId, productId });
      await newFavorite.save();
+     await newFavorite.populate("productId");
     return res.status(201).json({ message: "Product added to favorites", favorite: newFavorite });
 }
 catch (error) {
