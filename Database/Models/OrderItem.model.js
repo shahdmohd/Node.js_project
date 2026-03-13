@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema({
-    price: {
-        type: Number,
-        required: [true, "Price is required"],
-        min: [0.01, "Price must be greater than zero"],
-    },
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
