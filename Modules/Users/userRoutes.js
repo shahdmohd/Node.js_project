@@ -20,7 +20,7 @@ userRoutes.get("/verify/:email", verifyAccount);
 
 userRoutes.get("/users", verifyToken, authorizeRoles("admin"), listUsers); 
 userRoutes.get("/profile", verifyToken, getProfile); 
-userRoutes.put("/updateprofile", verifyToken, authorizeRoles("customer", "seller"), validationMiddleware(userUpdateSchema), checkEmail, updateProfile); 
+userRoutes.put("/updateprofile", verifyToken, authorizeRoles("customer", "seller"), validationMiddleware(userUpdateSchema), updateProfile); 
 userRoutes.put("/changepassword", verifyToken, validationMiddleware(changePasswordSchema), changePassword); 
 userRoutes.delete("/deleteprofile", verifyToken, authorizeRoles("customer", "seller"), deleteProfile); 
 export default userRoutes

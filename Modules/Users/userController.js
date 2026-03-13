@@ -104,17 +104,12 @@ let verifyAccount = (req,res) => {
 let updateProfile = async (req, res) => {
   try {
     const userId = req.decoded._id;
-    const updateData = req.body;
-
-   
-    if (updateData.password) {
-      delete updateData.password;
-    }
+    const { name, phone, address } = req.body;
 
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
-      updateData,
-      { new: true }
+      { name, phone, address },
+      { new: true, runValidators: true } 
     ).select("-password");
 
     if (!updatedUser) {
@@ -129,6 +124,9 @@ let updateProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
 
 let deleteProfile = async (req, res) => {
   try {
@@ -170,5 +168,6 @@ let changePassword = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export {listUsers,signin,signup,verifyAccount,getProfile,updateProfile,deleteProfile,changePassword}

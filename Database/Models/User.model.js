@@ -32,6 +32,7 @@ const userSchema = new Schema({
         enum:["customer","seller","admin"],
         default:"customer"
     },
+     pendingEmail: { type: String, unique: true, sparse: true }, 
    
 
     // wishlist:[
