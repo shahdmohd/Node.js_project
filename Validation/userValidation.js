@@ -82,7 +82,7 @@ export const userUpdateSchema = Joi.object({
         .messages({
             "string.min": "Address must be at least 5 characters"
         }),
-      email: Joi.string().email()   
+        
 });
 
 
