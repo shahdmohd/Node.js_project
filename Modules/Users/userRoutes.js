@@ -14,6 +14,7 @@ import { userSignupSchema, userUpdateSchema, changePasswordSchema } from "../../
 
 let userRoutes = express.Router();
 
+
 userRoutes.post("/signup", validationMiddleware(userSignupSchema), checkEmail, hashPassword, signup);
 userRoutes.post("/signin",checkEmail, signin);
 userRoutes.get("/verify/:email", verifyAccount);

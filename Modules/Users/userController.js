@@ -99,11 +99,15 @@ let verifyAccount = (req,res) => {
 let updateProfile = async (req, res) => {
   try {
     const userId = req.decoded._id;
-    const { name, phone, address } = req.body;
+    const { email,name,phone, address, } = req.body;
+
+    
+
 
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
-      { name, phone, address },
+      { email, name, phone, address },
+
       { new: true, runValidators: true } 
     ).select("-password");
 
