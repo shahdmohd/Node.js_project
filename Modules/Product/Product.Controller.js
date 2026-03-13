@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import { productModel } from "../../Database/Models/Product.model.js";
+import Product from "../../Database/Models/Product.model.js";
 
 
 
 let listProducts = async (req, res) => {
-    let products = await productModel.find()
+    let products = await Product.find()
         .select(["name", "price", " -_id"])
         .populate("seller")
         .populate("category"); 
@@ -16,7 +16,7 @@ let listProducts = async (req, res) => {
 let addProduct = async (req, res) => {
     try {
 
-        let product = new productModel(req.body);
+        let product = new Product(req.body);
 
         await product.save();
 
@@ -45,7 +45,7 @@ let getProductByID = async (req, res) => {
 
  let updateProduct = async (req, res) => {
 
-    let product = await productModel.findByIdAndUpdate(
+    let product = await Product.findByIdAndUpdate(
         req.params.id,
         req.body,
         { new: true }
@@ -60,7 +60,7 @@ let getProductByID = async (req, res) => {
 
 let deleteProduct = async (req, res) => {
 
-    await productModel.findByIdAndDelete(req.params.id);
+    await Product.findByIdAndDelete(req.params.id);
 
     res.json({
         message: "Product deleted"
