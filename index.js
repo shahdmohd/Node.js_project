@@ -10,21 +10,25 @@ import adminRoutes from "./Modules/Admin/admin.routes.js";
 import reviewsRoutes from "./Modules/Reviews/reviewsRoutes.js";
 import categoryRoutes from "./Modules/Category/Category.Routes.js";
 import productRoutes from "./Modules/Product/Product.Routes.js";
+import paymentRoutes from "./Modules/Payments/payment.routes.js";
+import orderRoutes from "./Modules/Orders/orders.routes.js";
 
 
 const app = express();
 
 
 app.use(express.json());
-app.use("/api/payment", paymentRoutes);
 app.use(userRoutes);
 app.use(wishlistRoutes);
 app.use(favoriteRoutes);
 app.use(reviewsRoutes);
-app.use(globalError);
 app.use(categoryRoutes);
 app.use(productRoutes);
+app.use(orderRoutes);
+app.use(paymentRoutes);
+
 app.use(adminRoutes);
+app.use(globalError);
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
