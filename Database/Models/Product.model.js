@@ -35,8 +35,13 @@ const productSchema = new mongoose.Schema({
     ratingsQuantity: {
         type: Number,
         default: 0
+    },
+    isApproved: {
+        type: Boolean,
+        default: false
     }
 })
 
-const productModel = mongoose.model("Product", productSchema);
-export default productModel;
+const Product = mongoose.model("Product", productSchema);
+
+export default Product;
