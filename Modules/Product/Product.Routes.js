@@ -4,7 +4,8 @@ import verifyToken from "../../Middleware/verifyToken.js";
 
 
 let productRoutes = express.Router();
-productRoutes.use(verifyToken); //apply the verifyToken middleware to all the routes in this router
+//
+//productRoutes.use(verifyToken); //apply the verifyToken middleware to all the routes in this router
 // productRoutes.get("/products",verifyToken, listPosts);
 productRoutes.get("/products", listProducts);
 productRoutes.get("/myProducts", getProductByID);
