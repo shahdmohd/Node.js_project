@@ -12,7 +12,7 @@ let userRoutes = express.Router();
 
 // userRoutes.get("/users", listUsers);
 userRoutes.post("/signup",checkEmail,hashPassword, signup);
-userRoutes.post("/signin",checkEmail, signin)
+userRoutes.post("/signin",checkEmail, canUseAccount, signin)
 userRoutes.get("/verify/:email",verifyAccount)
 userRoutes.get("/profile", verifyToken, canUseAccount, getProfile)
 
