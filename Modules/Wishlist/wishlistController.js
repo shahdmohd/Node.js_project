@@ -1,4 +1,5 @@
 import wishlistModel from "../../Database/Models/wishlist.model.js";
+import Product from "../../Database/Models/Product.model.js";
 import mongoose from "mongoose";
 
 
@@ -30,6 +31,17 @@ console.log("Type:", typeof productId);
     if (!mongoose.Types.ObjectId.isValid(productId)) {
             return res.status(400).json({ message: "Invalid Product ID format" });
         }
+
+        const product = await Product.findById(productId);
+
+   if (!product) {
+      return res.status(404).json({ message: "Product does not exist" });
+    }
+
+    if (!product.isApproved) {
+  return res.status(403).json({ message: "Product not approved yet" });
+  }
+
     try {
         const existingWishlistItem = await wishlistModel.findOne({ userId, productId });
         if (existingWishlistItem) {
