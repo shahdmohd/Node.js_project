@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Product from "../../Database/Models/Product.model.js";
 import favoriteModel from "../../Database/Models/Favorite.model.js";
 
 
@@ -16,6 +17,17 @@ let getFavorites = async (req,res) => {
         return res.status(400).json({ message: "Invalid Product ID format" });
 
     }
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product does not exist" });
+     }
+
+if (!product.isApproved) {
+  return res.status(403).json({ message: "Product not approved yet" });
+}
+
     try { 
         let existingFavorite = await favoriteModel.findOne({ userId, productId }); 
     if (existingFavorite) {
