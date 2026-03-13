@@ -14,6 +14,5 @@ productRoutes.post("/products", authorizeRoles("seller"), addProduct);
 productRoutes.delete("/products/:id", authorizeRoles("seller", "admin"), deleteProduct);
 productRoutes.put("/products/:id", authorizeRoles("seller", "admin"), updateProduct);
 
-
 export default productRoutes;
 

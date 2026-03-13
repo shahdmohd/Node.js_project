@@ -13,9 +13,9 @@ let addReview = async (req, res) => {
         if (existingReview) {
             return res.status(409).json({ message: "You have already reviewed this product" });
         }
-         const newReview = new reviewModel({ userId, productId, rating, comment });
-        // const newReview = new reviewModel({ userId, productId, rating, comment }).populate("productId");
-        await newReview.save();
+        //  const newReview = new reviewModel({ userId, productId, rating, comment });
+        const newReview = await reviewModel.create({ userId, productId, rating, comment });
+        await newReview.populate("productId");
         res.status(201).json({ message: "Review added successfully", review: newReview });
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -25,8 +25,8 @@ let addReview = async (req, res) => {
 let getReviews = async (req, res) => {
     const userId=req.decoded._id;
     try {
-        const reviews = await reviewModel.find({ userId });
-        //const reviews = await reviewModel.find({ userId }).populate("productId");
+        // const reviews = await reviewModel.find({ userId });
+        const reviews = await reviewModel.find({ userId }).populate("productId");
         res.status(200).json({ message: "Reviews fetched successfully", reviews });
     
         

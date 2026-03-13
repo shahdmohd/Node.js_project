@@ -9,6 +9,8 @@ import adminRoutes from "./Modules/Admin/admin.routes.js";
 import categoryRoutes from "./Modules/Category/Category.Routes.js";
 import productRoutes from "./Modules/Product/Product.Routes.js";
 import reviewsRoutes from "./Modules/Reviews/reviewsRoutes.js";
+import categoryRoutes from "./Modules/Category/Category.Routes.js";
+import productRoutes from "./Modules/Product/Product.Routes.js";
 
 
 const app = express();

@@ -31,7 +31,6 @@ let addProduct = async (req, res) => {
 };
 
 let getProductByID = async (req, res) => {
-
     let product = await Product.findOne({_id: req.params.id, isApproved: true})
         .populate("category")
         .populate("seller"); //is it imp?
@@ -39,7 +38,6 @@ let getProductByID = async (req, res) => {
     if(!product){
         return res.status(404).json({ message: "Product not found" });
     }
-
     res.json({
         message: "Product",
         data: product
@@ -54,11 +52,10 @@ let getProductByID = async (req, res) => {
         req.body,
         { new: true }
     );
-
+   
     if(!product){
         return res.status(404).json({ message: "Product not found" });
     }
-
     res.json({
         message: "Product updated",
         data: product
@@ -67,13 +64,12 @@ let getProductByID = async (req, res) => {
 };
 
 let deleteProduct = async (req, res) => {
-
     let product = await Product.findByIdAndDelete(req.params.id);
 
     if(!product){
         return res.status(404).json({ message: "Product not found" });
     }
-
+  
     res.json({
         message: "Product deleted"
     });
