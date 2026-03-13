@@ -1,22 +1,22 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
+import orderItemModel from "./OrderItem.model.js";
 
 const orderSchema = new mongoose.Schema({
     items: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "OrderItem",
+        type: [orderItemModel.schema],
         required: [true, "Items are required"],   
     },
-    userID: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,   
         ref: "User",
         required: [true, "User is required"]
     },
-    paymentID: {
+    payment: {
         type: mongoose.Schema.Types.ObjectId,   
         ref: "Payment",
         required: [true, "Payment is required"]
     },
-    addressID: {
+    address: {
         type: mongoose.Schema.Types.ObjectId,   
         ref: "Address",
         required: [true, "Address is required"]
@@ -40,4 +40,5 @@ const orderSchema = new mongoose.Schema({
     versionKey: false 
 });
 
-export const orderModel = mongoose.model("Order", orderSchema);
+const orderModel = model("Order", orderSchema);
+export default orderModel;
