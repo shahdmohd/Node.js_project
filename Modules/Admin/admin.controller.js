@@ -15,11 +15,28 @@ let getUser = async(req, res)=>{
     res.json(user);
 };
 
+let approveUser = async (req, res) => {
+  const user = await User.findByIdAndUpdate(req.params.id,
+    { isApproved: true, isRestricted: false },
+    { new: true }
+  );
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json({ message: "User approved successfully", user });
+};
+
 let restrictUser = async(req, res)=>{
     const user = await userModel.findByIdAndUpdate(req.params.id,
         {isRestricted: true},
         {new: true} // Mongoose returns the updated document
     );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     res.json({message: "User restricted", user});
 };
 
@@ -30,6 +47,10 @@ let unrestrictUser = async (req, res) => {
     { isRestricted: false },
     { new: true }
   );
+
+  if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
   res.json({message: "User unrestricted", user});
 };
@@ -56,4 +77,12 @@ let activateUser = async (req, res) => {
   res.json({message: "User activated", user});
 };
 
-export {listUsers, getUser, restrictUser, unrestrictUser, deactivateUser, activateUser}
+let deleteUser = async(req, res)=>{
+  const user = await userModel.findByIdAndDelete(req.params.id);
+  if(!user){
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.json({message: "User deleted", user});
+}
+
+export {listUsers, getUser, approveUser, restrictUser, unrestrictUser, deleteUser}

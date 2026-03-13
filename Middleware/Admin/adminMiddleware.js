@@ -7,4 +7,17 @@ let isAdmin = (req, res, next)=> {
     next();
 };
 
-export default isAdmin
+const canUseAccount = (req, res, next) => {
+    console.log(req.user);
+  if (!req.user.isApproved) {
+    return res.status(403).json({ message: "Account is pending approval" });
+  }
+
+  if (req.user.isRestricted) {
+    return res.status(403).json({ message: "Account is restricted" });
+  }
+
+  next();
+};
+
+export {isAdmin, canUseAccount}

@@ -33,11 +33,13 @@ const userSchema = new Schema({
             default:"customer"
     },
 
-    isActive: {
+    isApproved: {
         type: Boolean,
-        default: true
+        default: function () {
+            return this.role !== "seller";
+        }
     },
-
+    
     isRestricted: {
         type: Boolean,
         default: false
