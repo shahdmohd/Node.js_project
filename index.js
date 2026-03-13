@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import  globalError  from "./Middleware/User/CatchError.js";
 import { connection } from "./Database/dbconnect.js";
@@ -15,6 +16,7 @@ const app = express();
 
 
 app.use(express.json());
+app.use("/api/payment", paymentRoutes);
 app.use(userRoutes);
 app.use(wishlistRoutes);
 app.use(favoriteRoutes);
