@@ -27,12 +27,26 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-   role:{
-        type:String,
-        enum:["customer","seller","admin"],
-        default:"customer"
+    role:{
+            type:String,
+            enum:["customer","seller","admin"],
+            default:"customer"
     },
-     pendingEmail: { type: String, unique: true, sparse: true }, 
+
+    isApproved: {
+        type: Boolean,
+        default: function () {
+            return this.role !== "seller";
+        }
+    },
+    
+    isRestricted: {
+        type: Boolean,
+        default: false
+    },
+
+    pendingEmail: { type: String, unique: true, sparse: true } 
+
    
 
     // wishlist:[

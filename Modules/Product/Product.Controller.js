@@ -4,7 +4,7 @@ import Product from "../../Database/Models/Product.model.js";
 
 
 let listProducts = async (req, res) => {
-    let products = await Product.find()
+    let products = await Product.find({isApproved: true})
         .select(["name", "price", " -_id"])
         .populate("seller")
         .populate("category"); 
@@ -31,11 +31,13 @@ let addProduct = async (req, res) => {
 };
 
 let getProductByID = async (req, res) => {
-
-    let product = await productModel.findById(req.params.id)
+    let product = await Product.findOne({_id: req.params.id, isApproved: true})
         .populate("category")
         .populate("seller"); //is it imp?
 
+    if(!product){
+        return res.status(404).json({ message: "Product not found" });
+    }
     res.json({
         message: "Product",
         data: product
@@ -50,7 +52,10 @@ let getProductByID = async (req, res) => {
         req.body,
         { new: true }
     );
-
+   
+    if(!product){
+        return res.status(404).json({ message: "Product not found" });
+    }
     res.json({
         message: "Product updated",
         data: product
@@ -59,9 +64,12 @@ let getProductByID = async (req, res) => {
 };
 
 let deleteProduct = async (req, res) => {
+    let product = await Product.findByIdAndDelete(req.params.id);
 
-    await Product.findByIdAndDelete(req.params.id);
-
+    if(!product){
+        return res.status(404).json({ message: "Product not found" });
+    }
+  
     res.json({
         message: "Product deleted"
     });
