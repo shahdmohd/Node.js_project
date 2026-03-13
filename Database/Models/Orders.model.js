@@ -14,12 +14,7 @@ const orderSchema = new mongoose.Schema({
     payment: {
         type: mongoose.Schema.Types.ObjectId,   
         ref: "Payment",
-        required: [true, "Payment is required"]
-    },
-    address: {
-        type: mongoose.Schema.Types.ObjectId,   
-        ref: "Address",
-        required: [true, "Address is required"]
+        required: false
     },
     status: {
         type: String,
