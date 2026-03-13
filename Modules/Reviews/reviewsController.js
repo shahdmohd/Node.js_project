@@ -1,4 +1,5 @@
 import reviewModel from "../../Database/Models/Reviews.model.js";
+import Product from "../../Database/Models/Product.model.js";
 import mongoose from "mongoose";
 
 let addReview = async (req, res) => {
@@ -7,8 +8,20 @@ let addReview = async (req, res) => {
 
      if (!mongoose.Types.ObjectId.isValid(productId)) {
                 return res.status(400).json({ message: "Invalid Product ID format" });
-            }
+        }
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product does not exist" });
+     }
+
+  if (!product.isApproved) {
+  return res.status(403).json({ message: "Product not approved yet" });
+  }
+  
     try {
+    
         const existingReview = await reviewModel.findOne({ userId, productId });
         if (existingReview) {
             return res.status(409).json({ message: "You have already reviewed this product" });
