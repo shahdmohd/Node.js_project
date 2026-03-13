@@ -8,6 +8,7 @@ let isAdmin = (req, res, next)=> {
 };
 
 const canUseAccount = (req, res, next) => {
+    console.log(req.user);
   if (!req.user.isApproved) {
     return res.status(403).json({ message: "Account is pending approval" });
   }
