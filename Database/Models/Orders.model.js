@@ -23,12 +23,7 @@ const orderSchema = new mongoose.Schema({
     },
     totalAmount: {
         type: Number,
-        required: [true, "Total amount is required"],
-        min: [0, "Total amount cannot be negative"]
-    },
-    placedAt: {
-        type: Date,
-        default: Date.now
+        required: false
     }
 }, {
     timestamps: true,      
