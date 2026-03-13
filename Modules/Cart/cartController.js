@@ -67,14 +67,15 @@ if cart exists, return the cart with populated product details
 if cart is empty, return an empty cart
 */
 
-const getCart = async (req, res) => {
-    let userId = req.decoded._id;
-    let cart = await cartModel.findOne({ userId }).populate("items.productId", "name price -_id");
-    if (!cart) {
-        return res.status(404).json({ message: "Cart not found" });
+const getCart = async (req,res) => {
+    try {
+        let cart = await cartModel.find().populate("user", "name email -_id")
+        res.status(200).json({message: "Cart retrieved successfully", data: cart})
     }
-    res.status(200).json({ message: "Cart retrieved", cart });
-};
+    catch (error) {
+        res.status(500).json({message: "Error retrieving cart", error: error.message})
+    }
+}
 
 export { addToCart, removeFromCart, getCart };
 
