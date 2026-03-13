@@ -1,4 +1,5 @@
 import userModel from "../../Database/Models/User.model.js";
+import Product from "../../Database/Models/Product.model.js";
 
 let listUsers = async (req, res) => {
     let users = await userModel.find();
@@ -16,7 +17,7 @@ let getUser = async(req, res)=>{
 };
 
 let approveUser = async (req, res) => {
-  const user = await User.findByIdAndUpdate(req.params.id,
+  const user = await userModel.findByIdAndUpdate(req.params.id,
     { isApproved: true, isRestricted: false },
     { new: true }
   );
@@ -85,4 +86,61 @@ let deleteUser = async(req, res)=>{
   res.json({message: "User deleted", user});
 }
 
-export {listUsers, getUser, approveUser, restrictUser, unrestrictUser, deleteUser}
+let getProduct = async (req, res) => {
+  try {
+    let product = await Product.findById(req.params.id).populate("category").populate("seller");
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({
+      message: "Product fetched successfully",
+      data: product
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+let approveProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id,
+      { isApproved: true },
+      { new: true }
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({
+      message: "Product approved successfully",
+      product
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+let unapproveProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id,
+      { isApproved: false },
+      { new: true }
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({
+      message: "Product unapproved successfully",
+      product
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export {listUsers, getUser, approveUser, restrictUser, unrestrictUser, deleteUser, getProduct, approveProduct, unapproveProduct}

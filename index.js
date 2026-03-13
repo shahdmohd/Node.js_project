@@ -17,9 +17,9 @@ app.use(userRoutes);
 app.use(wishlistRoutes);
 app.use(favoriteRoutes);
 app.use(globalError);
-app.use(adminRoutes);
 app.use(categoryRoutes);
 app.use(productRoutes);
+app.use(adminRoutes);
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
