@@ -5,6 +5,9 @@ import userRoutes from "./Modules/Users/userRoutes.js";
 import wishlistRoutes from "./Modules/Wishlist/wishlistRoutes.js";
 import favoriteRoutes from "./Modules/Favorites/favoriteRoutes.js";
 import adminRoutes from "./Modules/Admin/admin.routes.js";
+import categoryRoutes from "./Modules/Category/Category.Routes.js";
+import productRoutes from "./Modules/Product/Product.Routes.js";
+
 
 const app = express();
 
@@ -15,8 +18,8 @@ app.use(wishlistRoutes);
 app.use(favoriteRoutes);
 app.use(globalError);
 app.use(adminRoutes);
-
-
+app.use(categoryRoutes);
+app.use(productRoutes);
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
