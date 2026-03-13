@@ -43,7 +43,10 @@ const userSchema = new Schema({
     isRestricted: {
         type: Boolean,
         default: false
-    }
+    },
+
+    pendingEmail: { type: String, unique: true, sparse: true } 
+
    
 
     // wishlist:[

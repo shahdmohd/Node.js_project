@@ -96,4 +96,74 @@ let verifyAccount = (req,res) => {
   }
 };
 
-export {signin,signup,verifyAccount,getProfile}
+let updateProfile = async (req, res) => {
+  try {
+    const userId = req.decoded._id;
+    const { name, phone, address } = req.body;
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+      userId,
+      { name, phone, address },
+      { new: true, runValidators: true } 
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      message: "Profile updated successfully",
+      data: updatedUser
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+
+let deleteProfile = async (req, res) => {
+  try {
+    const userId = req.decoded._id;
+
+    const deletedUser = await userModel.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      message: "Profile deleted successfully",
+      data: { deletedUser: deletedUser.email }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+let changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await userModel.findById(req.decoded._id);
+    
+    
+    const isMatch = bcrypt.compareSync(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+    
+  
+    user.password = bcrypt.hashSync(newPassword, 10);
+    await user.save();
+    
+    res.json({ message: "Password changed successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+export {signin,signup,verifyAccount,getProfile,updateProfile,deleteProfile,changePassword}
+
