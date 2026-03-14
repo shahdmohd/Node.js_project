@@ -21,6 +21,8 @@ const app = express();
 
 app.use(express.json());
 app.use(userRoutes);
+app.use(orderRoutes);
+app.use(paymentRoutes);
 app.use(wishlistRoutes);
 app.use(favoriteRoutes);
 app.use(reviewsRoutes);
@@ -29,8 +31,6 @@ app.use(productRoutes);
 app.use(cartRoutes);
 app.use(checkoutRoutes);
 app.use(couponRoutes);
-app.use(orderRoutes);
-app.use(paymentRoutes);
 app.use(adminRoutes);
 app.use(globalError);
 
