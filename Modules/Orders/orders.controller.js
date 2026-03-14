@@ -1,5 +1,6 @@
 import orderModel from "../../Database/Models/Orders.model.js";
 import Product from "../../Database/Models/Product.model.js";
+import { sendOrderEmail } from "../../Email/email.js";
 
 let placeOrder = async (req, res) => {
     req.body.user = req.decoded._id;
@@ -20,6 +21,8 @@ let placeOrder = async (req, res) => {
     }
 
     await populatedOrder.save();
+    await sendOrderEmail(populatedOrder);
+    
     res.status(201).json({ message: "Order placed successfully", data: populatedOrder });
 }
 
@@ -65,26 +68,38 @@ let updateStatus = async (req, res) => {
         return res.status(400).json({ message: "status is required" });
     }
 
-    let order = await orderModel.findById(orderID);
+    let order = await orderModel.findById(orderID).populate({
+        path: "items",
+        populate: {
+            path: "product"
+        }
+    }).populate("user");
+    
     if (!order) {
         return res.status(404).json({ message: "Order not found" });
     }
 
     order.status = status;
     await order.save();
+    await sendOrderEmail(order, status);
 
     res.status(200).json({ message: "Order status updated", data: order });
 }
 
 let cancelOrder = async (req, res) => {
     let { orderID } = req.params;
-    let order = await orderModel.findById(orderID);
+    let order = await orderModel.findById(orderID).populate({
+        path: "items",
+        populate: {
+            path: "product"
+        }
+    }).populate("user");
     
     if (!order) {
         return res.status(404).json({ message: "Order not found" });
     }
 
-    if (order.user.toString() !== req.decoded._id.toString()) {
+    if (order.user._id.toString() !== req.decoded._id.toString()) {
         return res.status(403).json({ message: "You can only cancel your own orders" });
     }
 
@@ -94,6 +109,7 @@ let cancelOrder = async (req, res) => {
 
     order.status = "cancelled";
     await order.save();
+    await sendOrderEmail(order, "cancelled");
 
     res.status(200).json({ message: "Order cancelled successfully", data: order });
 }
