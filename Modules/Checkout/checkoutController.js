@@ -4,8 +4,8 @@ load cart items with product prices
 calculate total price
 validate promo code and calculate discounts
 create order with user details, items, total price, and applied discounts
-payment methods (credit card, PayPal, cash on delivery, wallet)
 clear cart after successful checkout
+apply coupon discount only if the products in the cart match the products in the coupon
 */
 import CartModel from "../../Database/Models/Cart.model.js";
 import CouponModel from "../../Database/Models/coupon.model.js";
@@ -14,7 +14,7 @@ import OrderModel from "../../Database/Models/Orders.model.js";
 export const checkout = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { paymentMethod, promoCode } = req.body;
+        const { promoCode } = req.body;
         const cart = await CartModel.findOne({ userId }).populate("items.productId");
         if (!cart || cart.items.length === 0) {
             return res.status(400).json({ message: "Cart is empty" });
@@ -29,23 +29,39 @@ export const checkout = async (req, res) => {
             if (!coupon) {
                 return res.status(400).json({ message: "Invalid or expired promo code" });
             }
-            if (coupon.type === "percentage") {
-                discount = (totalPrice * coupon.value) / 100;
-            } else {
-                discount = coupon.value;
+
+            const applicableProducts = cart.items.filter(item =>
+               coupon.products.some(p => p.equals(item.productId._id))
+           );
+
+            if (applicableProducts.length === 0) {
+               return res.status(400).json({ message: "Promo code does not apply to any products in the cart" });
             }
-        }
-        const finalTotal = totalPrice - discount;
-        const orderItems = cart.items.map(item => ({
+
+            let eligibleTotal = 0;
+            applicableProducts.forEach(item => {
+               eligibleTotal += item.productId.price * item.quantity;
+            });
+
+            if (coupon.type === "percentage") {
+              discount = eligibleTotal * (coupon.value / 100);
+            } else if (coupon.type === "fixed") {
+                discount = Math.min(coupon.value, eligibleTotal); 
+           }
+           }
+         const finalTotal = totalPrice - discount;
+         const orderItems = cart.items.map(item => ({
             product: item.productId._id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            price: item.productId.price
         }));
+
         const order = await OrderModel.create({
             user: userId,
             items: orderItems,
-            total: finalTotal,
+            totalAmount: finalTotal,
             discount: discount,
-            paymentMethod: paymentMethod
+            status: "pending"
         });
         await CartModel.deleteOne({ userId });
         res.status(201).json({ message: "Order created successfully", order });
