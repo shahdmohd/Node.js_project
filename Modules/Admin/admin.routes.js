@@ -12,6 +12,7 @@ adminRoutes.put("/admin/users/:id/approve", approveUser);
 adminRoutes.put("/admin/users/:id/restrict", restrictUser);
 adminRoutes.put("/admin/users/:id/unrestrict", unrestrictUser);
 adminRoutes.delete("/admin/users/:id/delete", deleteUser);
+
 adminRoutes.get("/admin/products", getProducts);
 adminRoutes.get("/admin/products/:id", getProduct);
 adminRoutes.put("/admin/products/:id/approve", approveProduct);

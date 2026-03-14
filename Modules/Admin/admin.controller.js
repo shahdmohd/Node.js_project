@@ -56,28 +56,6 @@ let unrestrictUser = async (req, res) => {
   res.json({message: "User unrestricted", user});
 };
 
-let deactivateUser = async (req, res) => {
-
-  const user = await userModel.findByIdAndUpdate(
-    req.params.id,
-    { isActive: false },
-    { new: true }
-  );
-
-  res.json({message: "User deactivated", user});
-};
-
-let activateUser = async (req, res) => {
-
-  const user = await userModel.findByIdAndUpdate(
-    req.params.id,
-    { isActive: true },
-    { new: true }
-  );
-
-  res.json({message: "User activated", user});
-};
-
 let deleteUser = async(req, res)=>{
   const user = await userModel.findByIdAndDelete(req.params.id);
   if(!user){
