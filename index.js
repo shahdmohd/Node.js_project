@@ -9,6 +9,7 @@ import adminRoutes from "./Modules/Admin/admin.routes.js";
 import reviewsRoutes from "./Modules/Reviews/reviewsRoutes.js";
 import categoryRoutes from "./Modules/Category/Category.Routes.js";
 import productRoutes from "./Modules/Product/Product.Routes.js";
+import cartRoutes from "./Modules/Cart/cartRoutes.js";
 
 
 const app = express();
@@ -19,11 +20,11 @@ app.use(userRoutes);
 app.use(wishlistRoutes);
 app.use(favoriteRoutes);
 app.use(reviewsRoutes);
-app.use(globalError);
 app.use(categoryRoutes);
 app.use(productRoutes);
-
+app.use(cartRoutes);
 app.use(adminRoutes);
+app.use(globalError);
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");

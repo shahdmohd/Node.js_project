@@ -56,6 +56,10 @@ const removeFromCart = async (req, res) => {
     } else {
         cart.items.splice(itemIndex, 1);
     }
+    if (cart.items.length === 0) {
+        await cartModel.findByIdAndDelete(cart._id);
+        return res.status(200).json({ message: "Product removed from cart, cart is now empty" });
+    }
     await cart.save();
     res.status(200).json({ message: "Product removed from cart", cart });
 };
@@ -69,7 +73,7 @@ if cart is empty, return an empty cart
 
 const getCart = async (req,res) => {
     try {
-        let cart = await cartModel.find().populate("user", "name email -_id")
+        let cart = await cartModel.find().populate("userId", "name email -_id")
         res.status(200).json({message: "Cart retrieved successfully", data: cart})
     }
     catch (error) {

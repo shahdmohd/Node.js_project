@@ -1,6 +1,6 @@
 import express from 'express';
 import { addToCart, removeFromCart, getCart } from './cartController.js';
-import verifyToken from '../../Middleware/verifytoken.js';
+import verifyToken from '../../Middleware/verifyToken.js';
 
 const cartRoutes = express.Router();
 cartRoutes.use(verifyToken);
