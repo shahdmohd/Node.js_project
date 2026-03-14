@@ -7,7 +7,11 @@ import Product from "../../Database/Models/Product.model.js";
 let listProducts = async (req, res) => {
 
 let products = await Product.find({isApproved: true})
-        .select("name price", " -_id")
+        .select({
+            name: 1,
+            price: 1,
+            _id: 0
+            })
         .populate("seller")
         .populate("category"); 
     res.json({ message: "List of Products",
