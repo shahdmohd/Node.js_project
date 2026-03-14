@@ -2,8 +2,10 @@ import express from "express";
 import verifyToken from "../../Middleware/verifyToken.js";
 import { authorizeRoles } from "../../Middleware/roleMiddleware.js";
 import { initiatePayment, getPayments, getAllPayments }from "./payment.controller.js";
+import { canUseAccount } from '../../Middleware/Admin/adminMiddleware.js';
 
 let paymentRoutes = express.Router();
+paymentRoutes.use(canUseAccount);
 
 paymentRoutes.post("/create-payment", verifyToken, initiatePayment);
 paymentRoutes.get("/payments", verifyToken, getPayments );
