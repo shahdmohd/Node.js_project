@@ -3,8 +3,10 @@ import verifyToken from "../../Middleware/verifyToken.js";
 import { authorizeRoles } from "../../Middleware/roleMiddleware.js";
 import { placeOrder, getOrders, cancelOrder, updateStatus, getOrderById, getAllOrders }
 from "./orders.controller.js"; 
+import { canUseAccount } from '../../Middleware/Admin/adminMiddleware.js';
 
 let orderRoutes = express.Router();
+orderRoutes.use(canUseAccount);
 
 orderRoutes.get("/orders", verifyToken, getOrders);
 orderRoutes.get("/allorders", verifyToken, authorizeRoles("admin"), getAllOrders);
