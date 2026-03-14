@@ -1,4 +1,9 @@
 import CouponModel from "../../Database/Models/coupon.model.js";
+/*
+create coupon:
+create new coupon with code, type, value, startDate, expiryDate, and products
+if code already exists, return error
+*/
 const createCoupon = async (req, res) => {
     try {
         const { code, type, value, startDate, expiryDate, products } = req.body;
@@ -13,6 +18,10 @@ const createCoupon = async (req, res) => {
     }
 };
 
+/*
+get coupons:
+list all coupons
+*/
 const getCoupons = async (req, res) => {
     try {
         const coupons = await CouponModel.find();
@@ -22,6 +31,11 @@ const getCoupons = async (req, res) => {
     }
 };
 
+/*
+update coupon:
+update coupon by id with code, type, value, startDate, expiryDate, and products
+if coupon not found, return error
+*/
 const updateCoupon = async (req, res) => {
     try {
         const { id } = req.params;
@@ -36,6 +50,10 @@ const updateCoupon = async (req, res) => {
     }
 };
 
+/*
+delete coupon:
+delete coupon by id
+*/
 const deleteCoupon = async (req, res) => {
     try {
         const { id } = req.params;
