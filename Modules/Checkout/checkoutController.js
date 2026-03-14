@@ -9,7 +9,7 @@ clear cart after successful checkout
 */
 import CartModel from "../../Database/Models/Cart.model.js";
 import CouponModel from "../../Database/Models/coupon.model.js";
-import OrderModel from "../../Database/Models/order.model.js";
+import OrderModel from "../../Database/Models/Orders.model.js";
 
 export const checkout = async (req, res) => {
     try {
