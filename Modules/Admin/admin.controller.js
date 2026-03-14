@@ -56,28 +56,6 @@ let unrestrictUser = async (req, res) => {
   res.json({message: "User unrestricted", user});
 };
 
-let deactivateUser = async (req, res) => {
-
-  const user = await userModel.findByIdAndUpdate(
-    req.params.id,
-    { isActive: false },
-    { new: true }
-  );
-
-  res.json({message: "User deactivated", user});
-};
-
-let activateUser = async (req, res) => {
-
-  const user = await userModel.findByIdAndUpdate(
-    req.params.id,
-    { isActive: true },
-    { new: true }
-  );
-
-  res.json({message: "User activated", user});
-};
-
 let deleteUser = async(req, res)=>{
   const user = await userModel.findByIdAndDelete(req.params.id);
   if(!user){
@@ -86,9 +64,16 @@ let deleteUser = async(req, res)=>{
   res.json({message: "User deleted", user});
 }
 
+let getProducts = async (req, res) => {
+    let products = await Product.find()
+    
+    res.json({ message: "List of Products", data: products })
+}
+
+
 let getProduct = async (req, res) => {
   try {
-    let product = await Product.findById(req.params.id).populate("category").populate("seller");
+    let product = await Product.findById(req.params.id);
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -143,4 +128,4 @@ let unapproveProduct = async (req, res) => {
   }
 };
 
-export {listUsers, getUser, approveUser, restrictUser, unrestrictUser, deleteUser, getProduct, approveProduct, unapproveProduct}
+export {listUsers, getUser, approveUser, restrictUser, unrestrictUser, deleteUser, getProducts, getProduct, approveProduct, unapproveProduct}

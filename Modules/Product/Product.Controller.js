@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
+
 import Product from "../../Database/Models/Product.model.js";
 
 
 
 let listProducts = async (req, res) => {
-    let products = await Product.find({isApproved: true})
+
+let products = await Product.find({isApproved: true})
         .select(["name", "price", " -_id"])
         .populate("seller")
         .populate("category"); 
@@ -31,6 +33,7 @@ let addProduct = async (req, res) => {
 };
 
 let getProductByID = async (req, res) => {
+
     let product = await Product.findOne({_id: req.params.id, isApproved: true})
         .populate("category")
         .populate("seller"); //is it imp?
@@ -47,11 +50,13 @@ let getProductByID = async (req, res) => {
 
  let updateProduct = async (req, res) => {
 
+
     let product = await Product.findByIdAndUpdate(
         req.params.id,
         req.body,
         { new: true }
     );
+
    
     if(!product){
         return res.status(404).json({ message: "Product not found" });
@@ -64,6 +69,7 @@ let getProductByID = async (req, res) => {
 };
 
 let deleteProduct = async (req, res) => {
+
     let product = await Product.findByIdAndDelete(req.params.id);
 
     if(!product){

@@ -10,12 +10,14 @@ import adminRoutes from "./Modules/Admin/admin.routes.js";
 import reviewsRoutes from "./Modules/Reviews/reviewsRoutes.js";
 import categoryRoutes from "./Modules/Category/Category.Routes.js";
 import productRoutes from "./Modules/Product/Product.Routes.js";
+import cartRoutes from "./Modules/Cart/cartRoutes.js";
+import checkoutRoutes from "./Modules/Checkout/checkoutRoutes.js";
+import couponRoutes from "./Modules/Coupon/couponRoutes.js";
 import paymentRoutes from "./Modules/Payments/payment.routes.js";
 import orderRoutes from "./Modules/Orders/orders.routes.js";
 
-
 const app = express();
-
+    
 
 app.use(express.json());
 app.use(userRoutes);
@@ -24,9 +26,11 @@ app.use(favoriteRoutes);
 app.use(reviewsRoutes);
 app.use(categoryRoutes);
 app.use(productRoutes);
+app.use(cartRoutes);
+app.use(checkoutRoutes);
+app.use(couponRoutes);
 app.use(orderRoutes);
 app.use(paymentRoutes);
-
 app.use(adminRoutes);
 app.use(globalError);
 
