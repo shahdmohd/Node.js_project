@@ -1,12 +1,12 @@
 import CouponModel from "../../Database/Models/coupon.model.js";
 const createCoupon = async (req, res) => {
     try {
-        const { code, type, value, startDate, expiryDate } = req.body;
+        const { code, type, value, startDate, expiryDate, products } = req.body;
         const existingCoupon = await CouponModel.findOne({ code });
         if (existingCoupon) {
             return res.status(400).json({ message: "Coupon code already exists" });
         }
-        const coupon = await CouponModel.create({ code, type, value, startDate, expiryDate });
+        const coupon = await CouponModel.create({ code, type, value, startDate, expiryDate, products });
         res.status(201).json({ message: "Coupon created successfully", coupon });
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
@@ -25,8 +25,8 @@ const getCoupons = async (req, res) => {
 const updateCoupon = async (req, res) => {
     try {
         const { id } = req.params;
-        const { code, type, value, startDate, expiryDate } = req.body;
-        const coupon = await CouponModel.findByIdAndUpdate(id, { code, type, value, startDate, expiryDate }, { new: true });
+        const { code, type, value, startDate, expiryDate, products } = req.body;
+        const coupon = await CouponModel.findByIdAndUpdate(id, { code, type, value, startDate, expiryDate, products}, { new: true });
         if (!coupon) {
             return res.status(404).json({ message: "Coupon not found" });
         }
