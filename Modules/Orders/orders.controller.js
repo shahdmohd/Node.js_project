@@ -11,12 +11,14 @@ let placeOrder = async (req, res) => {
         }
     }).populate("user");
     
-    let totalAmount = 0;
-    populatedOrder.items.forEach(item => {
-        totalAmount += item.product.price * item.quantity;
-    });
+    if (!populatedOrder.totalAmount) {
+        let totalAmount = 0;
+        populatedOrder.items.forEach(item => {
+            totalAmount += item.product.price * item.quantity;
+        });
+        populatedOrder.totalAmount = totalAmount;
+    }
 
-    populatedOrder.totalAmount = totalAmount;
     await populatedOrder.save();
     res.status(201).json({ message: "Order placed successfully", data: populatedOrder });
 }

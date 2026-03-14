@@ -1,4 +1,4 @@
-import Category from "../../Database/Models/Category.Model.js ";
+import Category from "../../Database/Models/Category.model.js ";
 
 let listCategories = async (req, res) => {
     let categories = await Category.find();

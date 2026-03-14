@@ -9,13 +9,30 @@ async function createIntention({ amount, currency = "EGP", billingData, items = 
   const formattedItems = items.map(item => {
     const productPrice = item.product?.price || 0;
     
-    return {
+    const formattedItem = {
       name: item.product?.name || "Product",
       description: item.product?.description || "",
       amount: Math.round(productPrice * 100),
       quantity: item.quantity || 1
     };
+
+    return formattedItem;
   });
+
+  const totalFromItems = formattedItems.reduce((sum, item) => {
+    return sum + (item.amount * item.quantity);
+  }, 0);
+
+  if (totalFromItems !== amountInCents && totalFromItems > 0) {
+    const discountAmount = totalFromItems - amountInCents;
+    
+    formattedItems.push({
+      name: "Discount",
+      description: "Discount Applied",
+      amount: -discountAmount,
+      quantity: 1
+    });
+  }
 
   const payload = {
     amount: amountInCents,
