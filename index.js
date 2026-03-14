@@ -13,7 +13,8 @@ import productRoutes from "./Modules/Product/Product.Routes.js";
 import cartRoutes from "./Modules/Cart/cartRoutes.js";
 import checkoutRoutes from "./Modules/Checkout/checkoutRoutes.js";
 import couponRoutes from "./Modules/Coupon/couponRoutes.js";
-//import paymentRoutes from "./Modules/Payments/payment.routes.js";
+import paymentRoutes from "./Modules/Payments/payment.routes.js";
+import orderRoutes from "./Modules/Orders/orders.routes.js";
 
 const app = express();
     
@@ -28,7 +29,8 @@ app.use(productRoutes);
 app.use(cartRoutes);
 app.use(checkoutRoutes);
 app.use(couponRoutes);
-//app.use(paymentRoutes)
+app.use(orderRoutes);
+app.use(paymentRoutes);
 app.use(adminRoutes);
 app.use(globalError);
 

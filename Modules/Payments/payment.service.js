@@ -3,27 +3,53 @@ import axios from "axios";
 const BASE_URL = "https://accept.paymob.com/v1";
 
 async function createIntention({ amount, currency = "EGP", billingData, items = [], orderId }) {
-  const response = await axios.post(
-    `${BASE_URL}/intention/`,
-    {
-      amount,                         
-      currency,
-      payment_methods: [Number(process.env.PAYMOB_INTEGRATION_ID)],
-      items,
-      billing_data: billingData,
-      special_reference: orderId || `order-${Date.now()}`,
-      notification_url: process.env.PAYMOB_NOTIFICATION_URL,
-      redirection_url: process.env.PAYMOB_REDIRECTION_URL,
-    },
-    {
-      headers: {
-        Authorization: `Token ${process.env.PAYMOB_SECRET_KEY}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
 
-  return response.data; 
+  const amountInCents = Math.round(amount * 100);
+
+  const formattedItems = items.map(item => {
+    const productPrice = item.product?.price || 0;
+    
+    return {
+      name: item.product?.name || "Product",
+      description: item.product?.description || "",
+      amount: Math.round(productPrice * 100),
+      quantity: item.quantity || 1
+    };
+  });
+
+  const payload = {
+    amount: amountInCents,
+    currency,
+    payment_methods: [Number(process.env.PAYMOB_INTEGRATION_ID)],
+    billing_data: billingData,
+    special_reference: orderId || `order-${Date.now()}`,
+    notification_url: process.env.PAYMOB_NOTIFICATION_URL,
+    redirection_url: process.env.PAYMOB_REDIRECTION_URL,
+  };
+
+  if (formattedItems.length > 0) {
+    payload.items = formattedItems;
+  }
+
+  console.log("Paymob Payload:", JSON.stringify(payload, null, 2));
+
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/intention/`,
+      payload,
+      {
+        headers: {
+          Authorization: `Token ${process.env.PAYMOB_SECRET_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Paymob API Error Details:", JSON.stringify(error.response?.data, null, 2));
+    throw error;
+  }
 }
 
 
