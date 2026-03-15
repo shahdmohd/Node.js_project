@@ -1,5 +1,9 @@
 # 🛒 E-Commerce Platform (Node.js)
 
+## Video Demo
+
+https://drive.google.com/file/d/1RLALK46DtFBvcgz3_tWQC_yVW3AYCBWF/view?usp=sharing
+
 ## 📌 Overview
 
 This is a full-featured **E-Commerce API** built with **Node.js, Express.js, and MongoDB**.
