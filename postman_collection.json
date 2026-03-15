@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "E-Commerce API - Complete",
+    "name": "E-Commerce API Collection",
     "description": "Comprehensive E-Commerce API Collection - All Endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -318,7 +318,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"product\": \"{{productId}}\",\n  \"quantity\": 2\n}"
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 2\n}"
             },
             "url": {
               "raw": "http://localhost:3000/addToCart",
@@ -501,7 +501,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"product\": \"{{productId}}\",\n  \"rating\": 5,\n  \"comment\": \"Excellent product!\"\n}"
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"rating\": 5,\n  \"comment\": \"Excellent product!\"\n}"
             },
             "url": {
               "raw": "http://localhost:3000/reviews/addreview",
@@ -576,7 +576,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": \"SAVE20\",\n  \"discount\": 20,\n  \"expiryDate\": \"2026-12-31\"\n}"
+              "raw": "{\n  \"code\": \"SAVE11\",\n  \"type\": \"percentage\",\n  \"value\": 10,\n  \"isActive\": true,\n  \"startDate\": \"2026-03-14T00:00:00.000Z\",\n  \"expiryDate\": \"2026-04-14T00:00:00.000Z\",\n  \"products\": [\"69b5fb0c18c10091e564aaaa\"]\n}"
             },
             "url": {
               "raw": "http://localhost:3000/coupons",
@@ -740,7 +740,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cartItems\": [\n    {\n      \"product\": \"{{productId}}\",\n      \"quantity\": 2\n    }\n  ],\n  \"coupon\": \"{{couponCode}}\"\n}"
+              "raw": "{\n  \"promoCode\": \"SAVE11\"\n}"
             },
             "url": {
               "raw": "http://localhost:3000/checkout",
