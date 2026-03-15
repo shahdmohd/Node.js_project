@@ -9,6 +9,7 @@ let productRoutes = express.Router();
 //
 productRoutes.use(verifyToken);
 productRoutes.use(canUseAccount);
+
 productRoutes.get("/products", listProducts);
 productRoutes.get("/myProducts", authorizeRoles("seller"), myProducts);
 // productRoutes.get("/myProducts", getProductByID);

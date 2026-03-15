@@ -5,6 +5,7 @@ import { initiatePayment, getPayments, getAllPayments }from "./payment.controlle
 import { canUseAccount } from '../../Middleware/Admin/adminMiddleware.js';
 
 let paymentRoutes = express.Router();
+paymentRoutes.use(verifyToken);
 paymentRoutes.use(canUseAccount);
 
 paymentRoutes.post("/create-payment", verifyToken, initiatePayment);
