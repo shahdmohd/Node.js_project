@@ -2,8 +2,10 @@ import express from "express";
 import { listCategories, addCategory, deleteCategory, getCategoryByID, updateCategory  } from "./Category.Controller.js";
 import { authorizeRoles } from "../../Middleware/roleMiddleware.js";
 import { canUseAccount } from '../../Middleware/Admin/adminMiddleware.js';
+import verifyToken from "../../Middleware/verifyToken.js";
 
 let categoryRoutes = express.Router();
+categoryRoutes.use(verifyToken);
 categoryRoutes.use(canUseAccount);
 
 categoryRoutes.post("/category", authorizeRoles("seller", "admin"), addCategory);

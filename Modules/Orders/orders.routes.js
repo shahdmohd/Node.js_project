@@ -6,6 +6,7 @@ from "./orders.controller.js";
 import { canUseAccount } from '../../Middleware/Admin/adminMiddleware.js';
 
 let orderRoutes = express.Router();
+orderRoutes.use(verifyToken);
 orderRoutes.use(canUseAccount);
 
 orderRoutes.get("/orders", verifyToken, getOrders);
